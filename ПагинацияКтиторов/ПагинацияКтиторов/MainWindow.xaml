@@ -1,0 +1,70 @@
+﻿<Window x:Class="ПагинацияКтиторов.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ПагинацияКтиторов"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="900">
+    <Grid Background="#F0F0F0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Управление пользователями" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   FontSize="28" 
+                   FontWeight="Bold" 
+                   Foreground="#333333" />
+
+        <!-- Панель поиска и выбора количества записей на странице -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="20,10">
+            <TextBlock Text="Поиск: " VerticalAlignment="Center" FontSize="14" Foreground="#555555" />
+            <TextBox Name="SearchBox" Width="300" Margin="10,0" TextChanged="SearchBox_TextChanged" 
+                     Background="#FFFFFF" BorderBrush="#CCCCCC" BorderThickness="1" Padding="5" />
+            <TextBlock Text="Записей на странице:" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="#555555" />
+            <ComboBox Name="contCount" SelectionChanged="contCount_SelectionChanged" Width="100" Margin="10,0" 
+                      Background="#FFFFFF" BorderBrush="#CCCCCC" BorderThickness="1" Padding="5">
+                <ComboBoxItem Content="5" />
+                <ComboBoxItem Content="10" />
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Список пользователей -->
+        <ListView Name="ListPags" Grid.Row="2" Margin="20" Background="White" BorderBrush="#DDDDDD" BorderThickness="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#DDDDDD" BorderThickness="1" Margin="5" Padding="10" Background="#F9F9F9">
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1} {2} {3} {4}">
+                                    <Binding Path="familiya" />
+                                    <Binding Path="imya" />
+                                    <Binding Path="otchestvo" />
+                                    <Binding Path="data_rozhdenia" StringFormat="yyyy-MM-dd" />
+                                    <Binding Path="Role.naimenovanie" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Навигация по страницам -->
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+            <Button Content="Предыдущая страница" Name="prevPage" Click="prevPage_Click" Margin="10,0" Padding="10,5" 
+                    Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1" FontWeight="Bold" 
+                    Cursor="Hand" />
+            <TextBlock Name="curPage" FontSize="16" VerticalAlignment="Center" Margin="10,0" Foreground="#333333" />
+            <Button Content="Следующая страница" Name="nextPage" Click="nextPage_Click" Margin="10,0" Padding="10,5" 
+                    Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1" FontWeight="Bold" 
+                    Cursor="Hand" />
+        </StackPanel>
+    </Grid>
+</Window>
